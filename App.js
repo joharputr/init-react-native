@@ -2,53 +2,61 @@ import React, { Component } from 'react';
 import { Appbar } from 'react-native-paper';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import MateriFlaxBox from './MateriFlaxBox';
-import Position from './Position';
+import Position from './position/Position';
+import StateDInamis from './state_dinamis/stateDinamis';
+import CommunicationComponent from './communication_between_components/communication';
 
 export default function App() {
   return (
     <View >
-      {/* <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-      <Stext />
-      <BloxGreen /> */}
       <Appbar.Header style={styles.bottom}>
         <Appbar.BackAction />
         <Appbar.Content title="Title" />
         <Appbar.Action icon="magnify" onPress={() => console.log('Pressed mail')} />
-        {/* <Appbar.Action icon="dots-vertical" /> */}
+        <Appbar.Action icon="dots-vertical" />
       </Appbar.Header>
       <ScrollView>
         {/* <MateriFlaxBox /> */}
         <Position></Position>
+        <ContohProps></ContohProps>
+        <StateDInamis></StateDInamis>
+        <CommunicationComponent></CommunicationComponent>
       </ScrollView>
     </View>
   );
 }
 
+const ContohProps = () => {
+  return <View>
+    <Text style={styleText.textCenter}> Contoh Props</Text>
+    <Content data="test"></Content>
+  </View>
+}
+
+const Content = (props) => {
+  return (
+    <Text style={styleText.content}>
+      {props.data}
+    </Text>
+  );
+}
+
+const styleText = StyleSheet.create({
+  textCenter: {
+    'fontWeight': 'bold',
+    'textAlign': 'center'
+  },
+  content: {
+    'textAlign': 'center'
+  }
+})
+
 const styles = StyleSheet.create({
   bottom: {
-    color: '#ff00ff',
+    backgroundColor: 'red',
     left: 0,
     right: 0,
     bottom: 0,
   },
 });
 
-// const styles = StyleSheet.create({
-//   containeeer: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
-
-const Stext = () => {
-  return <Text>Testijng</Text>;
-}
-
-class BloxGreen extends Component {
-  render() {
-    return <Text> blok green</Text>
-  }
-}
