@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import { Appbar } from 'react-native-paper';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import MateriFlaxBox from './MateriFlaxBox';
 import Position from './position/Position';
 import StateDInamis from './state_dinamis/stateDinamis';
 import CommunicationComponent from './communication_between_components/communication';
+import 'react-native-gesture-handler';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export default function App() {
+  return (
+    <MyStack></MyStack>
+  );
+}
+
+const HomeScreen = ({ navigation }) => {
   return (
     <View >
       <Appbar.Header style={styles.bottom}>
@@ -21,10 +31,21 @@ export default function App() {
         <ContohProps></ContohProps>
         <StateDInamis></StateDInamis>
         <CommunicationComponent></CommunicationComponent>
+        <Button
+          title="Go to Jane's profile"
+          onPress={() =>
+            navigation.navigate('Profile', { name: 'Jane' })
+          }
+        />
       </ScrollView>
     </View>
   );
-}
+};
+
+const ProfileScreen = ({ navigation, route }) => {
+  return <Text>This is {route.params.name}'s profile</Text>;
+};
+
 
 const ContohProps = () => {
   return <View>
@@ -60,3 +81,19 @@ const styles = StyleSheet.create({
   },
 });
 
+const Stack = createStackNavigator();
+
+const MyStack = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={HomeScreen}
+        />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
